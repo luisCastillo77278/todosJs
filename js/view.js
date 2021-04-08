@@ -1,5 +1,6 @@
 import AddTodo from './components/add-todo.js';
 import Modal from './components/modal.js';
+import Filters from './components/filters.js';
 
 export default class View {
     constructor() {
@@ -7,10 +8,11 @@ export default class View {
         this.table = document.querySelector('#table');
         this.addTodoForm = new AddTodo();
         this.modal = new Modal();
+        this.filters = new Filters();
 
         this.addTodoForm.onClick((titulo, desc) => this.addTodo(titulo, desc));
         this.modal.onClick((id, values) => this.editTodo(id, values));
-
+        this.filters.onClick((filters) => this.filters(filters));
 
     }
 

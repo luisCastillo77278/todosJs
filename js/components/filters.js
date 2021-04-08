@@ -4,4 +4,12 @@ export default class Filters {
         this.form = document.getElementById('filters');
         this.btn = document.getElementById('serach');
     }
+
+    onClick(callback) {
+        this.btn.onclick = (e) => {
+            callback({
+
+            })
+        }
+    }
 }

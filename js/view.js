@@ -12,7 +12,7 @@ export default class View {
 
         this.addTodoForm.onClick((titulo, desc) => this.addTodo(titulo, desc));
         this.modal.onClick((id, values) => this.editTodo(id, values));
-        this.filters.onClick((filters) => this.filters(filters));
+        this.filters.onClick((filter) => this.filter(filter));
 
     }
 
@@ -23,6 +23,31 @@ export default class View {
     addTodo(titulo, desc) {
         const todo = this.model.addTodo(titulo, desc);
         this.createRow(todo);
+    }
+
+    filter(filters) {
+        const { type, words } = filters;
+        const [, ...rows] = this.table.getElementsByTagName('tr');
+        for (let row of rows) {
+            const [title, description, completed] = row.children;
+            let shouldHide = false;
+
+            if (words) {
+                shouldHide = !title.innerText.includes(words) && !description.innerText.includes(words);
+            }
+            const shouldBeCompleted = type === 'completed';
+            const isCompleted = completed.children[0].checked;
+
+            if (type !== 'all' && shouldBeCompleted !== isCompleted) {
+                shouldHide = true;
+            }
+
+            if (shouldHide) {
+                row.classList.add('d-none');
+            } else {
+                row.classList.remove('d-none');
+            }
+        }
     }
 
     editTodo(id, values) {

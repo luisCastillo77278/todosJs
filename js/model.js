@@ -22,7 +22,7 @@ export default class Model {
     }
 
     getTodos() {
-        return this.todos;
+        return this.todos.map((todo) => ({...todo }));
     }
 
     save() {
@@ -57,5 +57,14 @@ export default class Model {
         console.log(this.todos);
         this.save();
         return {...todo };
+    }
+
+    editTodo(id, values) {
+        // console.log(id);
+        // console.log(values);
+
+        const index = this.todos.findIndex((todo) => todo.id === id);
+        Object.assign(this.todos[index], values);
+        this.save();
     }
 }
